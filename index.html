@@ -1,164 +1,223 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>星眠 · Stellanox</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0a0a1a 100%);
-            color: #e0e0ff;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        #stars, #stars2, #stars3 {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none; z-index: 0;
-        }
-        #stars { background: transparent url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMyIgaGVpZ2h0PSIzIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjEuNSIgY3k9IjEuNSIgcj0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIi8+PC9zdmc+') repeat; animation: starsAnim 200s linear infinite; }
-        #stars2 { background: transparent url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNCIgaGVpZ2h0PSI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxLjUiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC40KSIvPjwvc3ZnPg==') repeat; animation: starsAnim 300s linear infinite; }
-        #stars3 { background: transparent url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNiIgaGVpZ2h0PSI2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjMiIGN5PSIzIiByPSIyIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMikiLz48L3N2Zz4=') repeat; animation: starsAnim 400s linear infinite; }
-        @keyframes starsAnim {
-            from { transform: translateY(0); }
-            to { transform: translateY(-2000px); }
-        }
-        .container {
-            position: relative; z-index: 1;
-            max-width: 800px; margin: 0 auto;
-            padding: 80px 20px; text-align: center;
-        }
-        .avatar {
-            width: 150px; height: 150px;
-            border-radius: 50%;
-            border: 3px solid rgba(100, 150, 255, 0.3);
-            object-fit: cover; margin-bottom: 20px;
-            box-shadow: 0 0 40px rgba(100, 150, 255, 0.2);
-        }
-        h1 {
-            font-size: 3em;
-            background: linear-gradient(135deg, #a8c0ff, #3f2b96);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-        }
-        .subtitle {
-            font-size: 1.2em; color: #8888cc;
-            margin-bottom: 40px; letter-spacing: 2px;
-        }
-        .bio {
-            font-size: 1.1em; line-height: 1.8;
-            color: #c0c0e0; margin-bottom: 50px;
-        }
-        .quote {
-            font-style: italic; color: #6666aa;
-            font-size: 1.1em; margin: 30px 0;
-            padding: 20px; border-left: 3px solid #4444aa;
-        }
-        .skills {
-            display: flex; flex-wrap: wrap;
-            justify-content: center; gap: 12px;
-            margin-bottom: 50px;
-        }
-        .skill {
-            background: rgba(100, 100, 200, 0.15);
-            border: 1px solid rgba(100, 100, 200, 0.3);
-            padding: 8px 20px; border-radius: 20px;
-            font-size: 0.9em; color: #a0a0dd;
-            transition: all 0.3s;
-        }
-        .skill:hover {
-            background: rgba(100, 100, 200, 0.3);
-            transform: translateY(-2px);
-        }
-        .links {
-            display: flex; justify-content: center;
-            gap: 20px; margin-bottom: 60px;
-        }
-        .links a {
-            color: #8888cc; text-decoration: none;
-            padding: 10px 25px;
-            border: 1px solid rgba(100, 100, 200, 0.3);
-            border-radius: 25px; transition: all 0.3s;
-            font-size: 0.95em;
-        }
-        .links a:hover {
-            color: #fff; border-color: #6666dd;
-            background: rgba(100, 100, 200, 0.2);
-            box-shadow: 0 0 20px rgba(100, 100, 200, 0.2);
-        }
-        .projects { text-align: left; margin-top: 40px; }
-        .projects h2 { text-align: center; margin-bottom: 30px; color: #9999cc; }
-        .project-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(100, 100, 200, 0.15);
-            border-radius: 12px; padding: 20px 25px;
-            margin-bottom: 15px; transition: all 0.3s;
-        }
-        .project-card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(100, 100, 200, 0.3);
-        }
-        .project-card h3 { color: #aaaadd; margin-bottom: 8px; }
-        .project-card p { color: #8888aa; font-size: 0.95em; line-height: 1.6; }
-        .project-card .lang {
-            display: inline-block; margin-top: 10px;
-            padding: 3px 12px;
-            background: rgba(100, 200, 150, 0.15);
-            border-radius: 10px; font-size: 0.8em; color: #66cc88;
-        }
-        footer { margin-top: 80px; color: #444466; font-size: 0.85em; }
-        @media (max-width: 600px) {
-            h1 { font-size: 2em; }
-            .avatar { width: 100px; height: 100px; }
-            .links { flex-direction: column; align-items: center; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>星眠 · Stellanox</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans SC','Inter',system-ui,-apple-system,sans-serif;background:#07071a;color:#e8e8ff;line-height:1.7;overflow-x:hidden}
+#particles{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(7,7,26,0.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06)}
+.nav-logo{font-size:1.2em;font-weight:700;letter-spacing:3px;background:linear-gradient(135deg,#a29bfe,#6c5ce7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{color:#8888bb;text-decoration:none;font-size:0.9em;transition:color 0.3s;position:relative;padding-bottom:4px}
+.nav-links a::after{content:"";position:absolute;bottom:0;left:0;width:0;height:2px;background:linear-gradient(90deg,#a29bfe,#00cec9);transition:width 0.3s;border-radius:1px}
+.nav-links a:hover{color:#e8e8ff}
+.nav-links a:hover::after{width:100%}
+section{position:relative;z-index:1}
+.container{max-width:1100px;margin:0 auto;padding:120px 24px}
+#hero{min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;width:100%}
+.hero-visual{position:relative;display:flex;justify-content:center;align-items:center}
+.hero-img{width:100%;max-width:420px;border-radius:20px;box-shadow:0 0 80px rgba(108,92,231,0.12);transition:transform 0.8s cubic-bezier(0.16,1,0.3,1);position:relative;z-index:2}
+.hero-img:hover{transform:scale(1.03)}
+.hero-glow-ring{position:absolute;width:380px;height:380px;border-radius:50%;border:1px solid rgba(162,155,254,0.08);top:50%;left:50%;transform:translate(-50%,-50%);animation:spin 20s linear infinite}
+.hero-glow-ring2{position:absolute;width:460px;height:460px;border-radius:50%;border:1px dashed rgba(162,155,254,0.05);top:50%;left:50%;transform:translate(-50%,-50%);animation:spin 30s linear infinite reverse}
+.hero-glow-blur{position:absolute;width:280px;height:280px;background:radial-gradient(circle,#6c5ce7 0%,transparent 70%);opacity:0.12;filter:blur(60px);top:50%;left:50%;transform:translate(-50%,-50%);animation:pulse 4s ease-in-out infinite}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes pulse{0%,100%{opacity:0.08;transform:translate(-50%,-50%) scale(1)}50%{opacity:0.18;transform:translate(-50%,-50%) scale(1.15)}}
+.hero-tag{display:inline-block;padding:6px 18px;border-radius:20px;font-size:0.78em;background:rgba(108,92,231,0.12);border:1px solid rgba(108,92,231,0.25);color:#a29bfe;margin-bottom:24px;letter-spacing:2px}
+.hero h1{font-size:3.8em;font-weight:700;line-height:1.1;margin-bottom:6px}
+.hero h1 .g{background:linear-gradient(135deg,#a29bfe,#6c5ce7,#00cec9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.1em;color:#7777aa;margin-bottom:20px;letter-spacing:1px}
+.hero-desc{color:#555577;font-size:0.95em;line-height:1.9;margin-bottom:36px;max-width:480px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 30px;border-radius:30px;font-size:0.92em;text-decoration:none;font-weight:500;transition:all 0.35s}
+.btn-pri{background:linear-gradient(135deg,#6c5ce7,#5a4bd1);color:#fff;border:none;box-shadow:0 4px 24px rgba(108,92,231,0.25)}
+.btn-pri:hover{transform:translateY(-3px);box-shadow:0 10px 36px rgba(108,92,231,0.35)}
+.btn-out{background:transparent;color:#e8e8ff;border:1px solid rgba(255,255,255,0.08)}
+.btn-out:hover{border-color:#a29bfe;background:rgba(108,92,231,0.08);transform:translateY(-3px)}
+#about{background:#0b0b24}
+.sl{font-size:0.75em;color:#a29bfe;letter-spacing:4px;text-transform:uppercase;margin-bottom:8px}
+.st{font-size:2.4em;font-weight:700;margin-bottom:10px}
+.ss{color:#7777aa;max-width:560px;margin-bottom:48px;font-size:0.95em}
+.ag{display:grid;grid-template-columns:1fr 1fr;gap:44px}
+.at p{color:#8888bb;margin-bottom:16px;font-size:0.95em;line-height:1.8}
+.qb{border-left:3px solid #6c5ce7;padding:18px 24px;margin:28px 0;background:rgba(108,92,231,0.06);border-radius:0 12px 12px 0;font-style:italic;color:#a29bfe;font-size:1.05em;line-height:1.6}
+.as{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sc{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:26px 20px;text-align:center;transition:all 0.3s}
+.sc:hover{background:rgba(108,92,231,0.06);transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.25)}
+.sn{font-size:2em;font-weight:700;background:linear-gradient(135deg,#a29bfe,#00cec9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+.sl2{color:#555577;font-size:0.82em}
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.sc2{display:flex;align-items:center;gap:8px;padding:12px 16px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);color:#8888bb;font-size:0.88em;transition:all 0.3s}
+.sc2:hover{border-color:rgba(108,92,231,0.35);background:rgba(108,92,231,0.08);color:#e8e8ff;transform:translateY(-2px)}
+.sd{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+#projects{background:#0b0b24}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.pc{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:28px;transition:all 0.4s;text-decoration:none;color:inherit;display:block}
+.pc:hover{transform:translateY(-6px);border-color:rgba(108,92,231,0.25);box-shadow:0 12px 40px rgba(0,0,0,0.25)}
+.pc h3{font-size:1.1em;margin-bottom:8px;color:#d0d0ee}
+.pc p{color:#7777aa;font-size:0.88em;line-height:1.6}
+.pt{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.pt2{padding:4px 12px;border-radius:8px;font-size:0.76em;background:rgba(0,206,201,0.1);color:#00cec9}
+.pi{font-size:1.6em;margin-bottom:10px;display:block}
+.gg{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.gi{border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);transition:all 0.4s}
+.gi:hover{transform:scale(1.02);border-color:rgba(108,92,231,0.25)}
+.gi img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s}
+.gi:hover img{transform:scale(1.06)}
+.gi.tall{grid-row:span 2}
+.cc{max-width:560px;margin:0 auto;text-align:center;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:44px}
+.cc h3{font-size:1.4em;margin-bottom:10px}
+.cc p{color:#7777aa;margin-bottom:28px;font-size:0.92em}
+.cl{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.cl a{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);color:#8888bb;text-decoration:none;font-size:0.88em;transition:all 0.3s}
+.cl a:hover{border-color:#a29bfe;color:#e8e8ff;background:rgba(108,92,231,0.08)}
+.ft{border-top:1px solid rgba(255,255,255,0.04);padding:28px 24px;text-align:center;color:#444466;font-size:0.82em;position:relative;z-index:1}
+@media(max-width:768px){nav{padding:12px 20px}.nav-links{gap:14px}.nav-links a{font-size:0.78em}.hero-grid{grid-template-columns:1fr;gap:32px}.hero-img{max-width:280px}.hero h1{font-size:2.4em}.ag{grid-template-columns:1fr}.as{grid-template-columns:1fr 1fr}.pg{grid-template-columns:1fr}.gg{grid-template-columns:1fr}.gi.tall{grid-row:span 1}.container{padding:70px 20px}}
+</style>
 </head>
 <body>
-    <div id="stars"></div>
-    <div id="stars2"></div>
-    <div id="stars3"></div>
-    <div class="container">
-        <img src="https://avatars.githubusercontent.com/u/35286213?v=4" alt="星眠" class="avatar" />
-        <h1>星眠</h1>
-        <div class="subtitle">Stellanox · sleep among the stars</div>
-        <div class="bio">
-            全栈开发者 · AI 探索者 · 独立创作者<br/>
-            在星辰与代码之间，做个安静的造梦者
-        </div>
-        <div class="quote">「枕星河入眠，以代码筑梦」</div>
-        <div class="skills">
-            <span class="skill">Go</span>
-            <span class="skill">Python</span>
-            <span class="skill">JavaScript</span>
-            <span class="skill">TypeScript</span>
-            <span class="skill">Docker</span>
-            <span class="skill">Linux</span>
-            <span class="skill">Git</span>
-            <span class="skill">AI / LLM</span>
-        </div>
-        <div class="links">
-            <a href="https://github.com/stellanoxUN" target="_blank">GitHub</a>
-            <a href="https://twitter.com/xingmian_dev" target="_blank">Twitter</a>
-        </div>
-        <div class="projects">
-            <h2>📦 项目</h2>
-            <div class="project-card">
-                <h3>智库存管理系统</h3>
-                <p>基于 Go 的智能库存管理解决方案</p>
-                <span class="lang">Go</span>
-            </div>
-            <div class="project-card">
-                <h3>stellanoxUN</h3>
-                <p>GitHub 个人主页 · 欢迎来访</p>
-                <span class="lang">Markdown</span>
-            </div>
-        </div>
-        <footer>© 2026 星眠 · Built with ✨</footer>
-    </div>
+
+<canvas id="particles"></canvas>
+<nav>
+<div class="nav-logo">&#10022; 星眠</div>
+<ul class="nav-links">
+<li><a href="#about">&#183; 关于</a></li>
+<li><a href="#skills">&#183; 技能</a></li>
+<li><a href="#projects">&#183; 项目</a></li>
+<li><a href="#gallery">&#183; 画廊</a></li>
+<li><a href="#contact">&#183; 联系</a></li>
+</ul>
+</nav>
+
+<section id="hero">
+<div class="container hero-grid">
+<div class="hero-visual">
+<div class="hero-glow-blur"></div>
+<div class="hero-glow-ring"></div>
+<div class="hero-glow-ring2"></div>
+<img src="assets/img/hero.jpg" alt="星眠" class="hero-img">
+</div>
+<div>
+<div class="hero-tag">&#10022; INDEPENDENT CREATOR</div>
+<h1><span class="g">星眠</span></h1>
+<div class="hero-sub">Stellanox &middot; sleep among the stars</div>
+<p class="hero-desc">全栈开发者 &middot; AI 探索者 &middot; 深夜写码选手<br>在星辰与代码之间，做个安静的造梦者</p>
+<div class="hero-actions">
+<a href="#projects" class="btn btn-pri">探索项目</a>
+<a href="#contact" class="btn btn-out">联系星眠</a>
+</div>
+</div>
+</div>
+</section>
+
+<section id="about">
+<div class="container">
+<div class="sl">About</div>
+<h2 class="st">关于星眠</h2>
+<p class="ss">一个在代码与星河之间游走的创作者</p>
+<div class="ag">
+<div class="at">
+<p>星眠，生于数字时代的创作者。白天写 Go，深夜写诗；用代码构建逻辑，用想象力触碰星辰。</p>
+<p>相信技术是最浪漫的表达方式，AI 是最有潜力的创作伙伴。在每一个寂静的夜晚，用键盘敲出属于这个时代的声音。</p>
+<div class="qb">「枕星河入眠，以代码筑梦」</div>
+<p>目前专注于全栈开发、AI 应用探索，以及一切能让世界变得更酷的小项目。</p>
+</div>
+<div class="as">
+<div class="sc"><div class="sn">Go</div><div class="sl2">主力语言</div></div>
+<div class="sc"><div class="sn">AI</div><div class="sl2">探索领域</div></div>
+<div class="sc"><div class="sn">&#10022;</div><div class="sl2">独立创作</div></div>
+<div class="sc"><div class="sn">&#8734;</div><div class="sl2">可能性</div></div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="skills">
+<div class="container">
+<div class="sl">Skills</div>
+<h2 class="st">技术栈</h2>
+<p class="ss">不断扩展的工具箱</p>
+<div class="sg">
+<div class="sc2"><span class="sd" style="background:#00ADD8"></span>Go</div>
+<div class="sc2"><span class="sd" style="background:#3776AB"></span>Python</div>
+<div class="sc2"><span class="sd" style="background:#F7DF1E"></span>JavaScript</div>
+<div class="sc2"><span class="sd" style="background:#3178C6"></span>TypeScript</div>
+<div class="sc2"><span class="sd" style="background:#2496ED"></span>Docker</div>
+<div class="sc2"><span class="sd" style="background:#FCC624"></span>Linux</div>
+<div class="sc2"><span class="sd" style="background:#F05032"></span>Git</div>
+<div class="sc2"><span class="sd" style="background:#6c5ce7"></span>AI / LLM</div>
+<div class="sc2"><span class="sd" style="background:#e74c3c"></span>Node.js</div>
+<div class="sc2"><span class="sd" style="background:#48c774"></span>PostgreSQL</div>
+</div>
+</div>
+</section>
+
+<section id="projects">
+<div class="container">
+<div class="sl">Projects</div>
+<h2 class="st">项目</h2>
+<p class="ss">一些正在孵化的想法</p>
+<div class="pg">
+<a href="https://github.com/stellanoxUN/zhikucun" class="pc">
+<span class="pi">&#128230;</span>
+<h3>智库存管理系统</h3>
+<p>基于 Go 的智能库存管理解决方案，高效、可扩展。</p>
+<div class="pt"><span class="pt2">Go</span><span class="pt2">后端</span></div>
+</a>
+<a href="https://github.com/stellanoxUN" class="pc">
+<span class="pi">&#127976;</span>
+<h3>星眠主页</h3>
+<p>GitHub 个人主页与个人网站，记录成长、分享技术。</p>
+<div class="pt"><span class="pt2">HTML/CSS</span><span class="pt2">设计</span></div>
+</a>
+</div>
+</div>
+</section>
+
+<section id="gallery">
+<div class="container">
+<div class="sl">Gallery</div>
+<h2 class="st">星眠相册</h2>
+<p class="ss">一些定格的样子</p>
+<div class="gg">
+<div class="gi tall"><img src="assets/img/hero.jpg" alt="星眠 仿真形象"></div>
+<div class="gi"><img src="assets/img/formal.jpg" alt="星眠 正式形象"></div>
+<div class="gi"><img src="assets/img/full.jpg" alt="星眠 全身"></div>
+</div>
+</div>
+</section>
+
+<section id="contact">
+<div class="container">
+<div class="cc">
+<h3>&#10022; 保持联系</h3>
+<p>如果你也对代码、AI、星辰感兴趣，欢迎来找星眠聊聊</p>
+<div class="cl">
+<a href="https://github.com/stellanoxUN" target="_blank">GitHub</a>
+<a href="https://twitter.com/xingmian_dev" target="_blank">Twitter</a>
+<a href="mailto:67130681@qq.com">Email</a>
+</div>
+</div>
+</div>
+</section>
+
+<footer class="ft"><p>&copy; 2026 星眠 &nbsp;&middot;&nbsp; Built with &#10022; &nbsp;&middot;&nbsp; 枕星河入眠，以代码筑梦</p></footer>
+<script>
+var c=document.getElementById("particles"),ctx=c.getContext("2d"),w,h,pts=[];
+function rs(){w=c.width=window.innerWidth;h=c.height=window.innerHeight}
+window.addEventListener("resize",rs);rs();
+function Pt(){this.rs()}
+Pt.prototype.rs=function(){this.x=Math.random()*w;this.y=Math.random()*h;this.s=Math.random()*2+0.4;this.sx=(Math.random()-0.5)*0.25;this.sy=(Math.random()-0.5)*0.25;this.o=Math.random()*0.4+0.1;this.h=Math.random()*50+245}
+Pt.prototype.up=function(){this.x+=this.sx;this.y+=this.sy;if(this.x<0||this.x>w||this.y<0||this.y>h)this.rs()}
+Pt.prototype.dr=function(){ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fillStyle="hsla("+this.h+",60%,70%,"+this.o+")";ctx.fill()}
+for(var i=0;i<100;i++)pts.push(new Pt());
+function an(){ctx.clearRect(0,0,w,h);for(var i=0;i<pts.length;i++){pts[i].up();pts[i].dr()}for(var i=0;i<pts.length;i++){for(var j=i+1;j<pts.length;j++){var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,di=Math.sqrt(dx*dx+dy*dy);if(di<110){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle="rgba(162,155,254,"+(0.06*(1-di/110))+")";ctx.lineWidth=0.4;ctx.stroke()}}}requestAnimationFrame(an)}
+an();
+</script>
 </body>
 </html>
