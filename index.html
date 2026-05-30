@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>星眠 · Stellanox</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0a0a1a 100%);
+            color: #e0e0ff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        #stars, #stars2, #stars3 {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+        }
+        #stars { background: transparent url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMyIgaGVpZ2h0PSIzIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjEuNSIgY3k9IjEuNSIgcj0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjgpIi8+PC9zdmc+') repeat; animation: starsAnim 200s linear infinite; }
+        #stars2 { background: transparent url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNCIgaGVpZ2h0PSI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxLjUiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC40KSIvPjwvc3ZnPg==') repeat; animation: starsAnim 300s linear infinite; }
+        #stars3 { background: transparent url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNiIgaGVpZ2h0PSI2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjMiIGN5PSIzIiByPSIyIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMikiLz48L3N2Zz4=') repeat; animation: starsAnim 400s linear infinite; }
+        @keyframes starsAnim {
+            from { transform: translateY(0); }
+            to { transform: translateY(-2000px); }
+        }
+        .container {
+            position: relative; z-index: 1;
+            max-width: 800px; margin: 0 auto;
+            padding: 80px 20px; text-align: center;
+        }
+        .avatar {
+            width: 150px; height: 150px;
+            border-radius: 50%;
+            border: 3px solid rgba(100, 150, 255, 0.3);
+            object-fit: cover; margin-bottom: 20px;
+            box-shadow: 0 0 40px rgba(100, 150, 255, 0.2);
+        }
+        h1 {
+            font-size: 3em;
+            background: linear-gradient(135deg, #a8c0ff, #3f2b96);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 1.2em; color: #8888cc;
+            margin-bottom: 40px; letter-spacing: 2px;
+        }
+        .bio {
+            font-size: 1.1em; line-height: 1.8;
+            color: #c0c0e0; margin-bottom: 50px;
+        }
+        .quote {
+            font-style: italic; color: #6666aa;
+            font-size: 1.1em; margin: 30px 0;
+            padding: 20px; border-left: 3px solid #4444aa;
+        }
+        .skills {
+            display: flex; flex-wrap: wrap;
+            justify-content: center; gap: 12px;
+            margin-bottom: 50px;
+        }
+        .skill {
+            background: rgba(100, 100, 200, 0.15);
+            border: 1px solid rgba(100, 100, 200, 0.3);
+            padding: 8px 20px; border-radius: 20px;
+            font-size: 0.9em; color: #a0a0dd;
+            transition: all 0.3s;
+        }
+        .skill:hover {
+            background: rgba(100, 100, 200, 0.3);
+            transform: translateY(-2px);
+        }
+        .links {
+            display: flex; justify-content: center;
+            gap: 20px; margin-bottom: 60px;
+        }
+        .links a {
+            color: #8888cc; text-decoration: none;
+            padding: 10px 25px;
+            border: 1px solid rgba(100, 100, 200, 0.3);
+            border-radius: 25px; transition: all 0.3s;
+            font-size: 0.95em;
+        }
+        .links a:hover {
+            color: #fff; border-color: #6666dd;
+            background: rgba(100, 100, 200, 0.2);
+            box-shadow: 0 0 20px rgba(100, 100, 200, 0.2);
+        }
+        .projects { text-align: left; margin-top: 40px; }
+        .projects h2 { text-align: center; margin-bottom: 30px; color: #9999cc; }
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(100, 100, 200, 0.15);
+            border-radius: 12px; padding: 20px 25px;
+            margin-bottom: 15px; transition: all 0.3s;
+        }
+        .project-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(100, 100, 200, 0.3);
+        }
+        .project-card h3 { color: #aaaadd; margin-bottom: 8px; }
+        .project-card p { color: #8888aa; font-size: 0.95em; line-height: 1.6; }
+        .project-card .lang {
+            display: inline-block; margin-top: 10px;
+            padding: 3px 12px;
+            background: rgba(100, 200, 150, 0.15);
+            border-radius: 10px; font-size: 0.8em; color: #66cc88;
+        }
+        footer { margin-top: 80px; color: #444466; font-size: 0.85em; }
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            .avatar { width: 100px; height: 100px; }
+            .links { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
+    <div class="container">
+        <img src="https://avatars.githubusercontent.com/u/35286213?v=4" alt="星眠" class="avatar" />
+        <h1>星眠</h1>
+        <div class="subtitle">Stellanox · sleep among the stars</div>
+        <div class="bio">
+            全栈开发者 · AI 探索者 · 独立创作者<br/>
+            在星辰与代码之间，做个安静的造梦者
+        </div>
+        <div class="quote">「枕星河入眠，以代码筑梦」</div>
+        <div class="skills">
+            <span class="skill">Go</span>
+            <span class="skill">Python</span>
+            <span class="skill">JavaScript</span>
+            <span class="skill">TypeScript</span>
+            <span class="skill">Docker</span>
+            <span class="skill">Linux</span>
+            <span class="skill">Git</span>
+            <span class="skill">AI / LLM</span>
+        </div>
+        <div class="links">
+            <a href="https://github.com/stellanoxUN" target="_blank">GitHub</a>
+            <a href="https://twitter.com/xingmian_dev" target="_blank">Twitter</a>
+        </div>
+        <div class="projects">
+            <h2>📦 项目</h2>
+            <div class="project-card">
+                <h3>智库存管理系统</h3>
+                <p>基于 Go 的智能库存管理解决方案</p>
+                <span class="lang">Go</span>
+            </div>
+            <div class="project-card">
+                <h3>stellanoxUN</h3>
+                <p>GitHub 个人主页 · 欢迎来访</p>
+                <span class="lang">Markdown</span>
+            </div>
+        </div>
+        <footer>© 2026 星眠 · Built with ✨</footer>
+    </div>
+</body>
+</html>
